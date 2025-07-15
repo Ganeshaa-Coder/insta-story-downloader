@@ -1,26 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Instagram Story Downloader</title>
+  <title>Instagram Story Preview</title>
   <style>
-    body { font-family: Arial; text-align: center; margin-top: 50px; }
-    input, button { padding: 10px; font-size: 16px; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      max-width: 400px;
+      margin-top: 10px;
+    }
+    #preview {
+      margin-top: 30px;
+    }
+    iframe {
+      width: 90%;
+      height: 500px;
+      max-width: 400px;
+      border: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Instagram Story Downloader</h1>
-  <input type="text" id="username" placeholder="Enter Instagram Username" />
-  <button onclick="download()">Download</button>
-  <p id="result" style="margin-top:20px;"></p>
+  <h1>Instagram Story Viewer (Public URLs)</h1>
+  <p>Paste a public Instagram story or reel URL below:</p>
+
+  <input type="text" id="storyUrl" placeholder="https://www.instagram.com/stories/..." />
+  <br/>
+  <button onclick="showPreview()">Preview Story</button>
+
+  <div id="preview"></div>
 
   <script>
-    function download() {
-      const user = document.getElementById('username').value;
-      document.getElementById('result').innerText = 
-        user ? `Feature coming soon for @${user}` : "Please enter a username.";
+    function showPreview() {
+      const url = document.getElementById('storyUrl').value.trim();
+      const previewDiv = document.getElementById('preview');
+      previewDiv.innerHTML = '';
+
+      if (!url.includes("instagram.com")) {
+        previewDiv.innerHTML = "<p style='color:red;'>Please enter a valid Instagram URL.</p>";
+        return;
+      }
+
+      // Embed using iframe (for reels, profiles, or stories with public links)
+      previewDiv.innerHTML = `
+        <p>Preview:</p>
+        <iframe src="${url}embed" allowfullscreen></iframe>
+      `;
     }
   </script>
 </body>
 </html>
+
